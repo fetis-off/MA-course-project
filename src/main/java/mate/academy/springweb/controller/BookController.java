@@ -9,8 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/books")
-
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
 

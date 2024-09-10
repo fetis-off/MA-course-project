@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
+import mate.academy.springweb.exception.DataProcessingException;
 import mate.academy.springweb.exception.EntityNotFoundException;
 import mate.academy.springweb.model.Book;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-
     private final EntityManagerFactory entityManagerFactory;
 
     @Override
@@ -29,7 +29,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new EntityNotFoundException("Cannot create book: " + book, e);
+            throw new DataProcessingException("Cannot create book: " + book, e);
         }
     }
 
@@ -37,6 +37,8 @@ public class BookRepositoryImpl implements BookRepository {
     public List<Book> getAll() {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             return entityManager.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Cannot get all books", e);
         }
     }
 
@@ -44,9 +46,9 @@ public class BookRepositoryImpl implements BookRepository {
     public Optional<Book> getBookById(Long id) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             Book book = entityManager.find(Book.class, id);
-            return book != null ? Optional.of(book) : Optional.empty();
+            return Optional.ofNullable(book);
         } catch (RuntimeException e) {
-            throw new EntityNotFoundException("Cannot find book: " + id, e);
+            throw new DataProcessingException("Cannot find book: " + id, e);
         }
     }
 }
