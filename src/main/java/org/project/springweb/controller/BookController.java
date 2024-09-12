@@ -1,9 +1,9 @@
-package mate.academy.springweb.controller;
+package org.project.springweb.controller;
 
 import lombok.RequiredArgsConstructor;
-import mate.academy.springweb.dto.BookDto;
-import mate.academy.springweb.dto.CreateBookRequestDto;
-import mate.academy.springweb.service.BookService;
+import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.CreateBookRequestDto;
+import org.project.springweb.service.BookService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

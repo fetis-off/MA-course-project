@@ -1,12 +1,11 @@
-package mate.academy.springweb.repository;
+package org.project.springweb.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
-import mate.academy.springweb.exception.DataProcessingException;
-import mate.academy.springweb.exception.EntityNotFoundException;
-import mate.academy.springweb.model.Book;
+import org.project.springweb.exception.DataProcessingException;
+import org.project.springweb.model.Book;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;

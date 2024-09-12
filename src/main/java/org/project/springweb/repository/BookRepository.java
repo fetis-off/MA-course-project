@@ -1,6 +1,7 @@
-package mate.academy.springweb.repository;
+package org.project.springweb.repository;
 
-import mate.academy.springweb.model.Book;
+import org.project.springweb.model.Book;
+
 import java.util.List;
 import java.util.Optional;
 

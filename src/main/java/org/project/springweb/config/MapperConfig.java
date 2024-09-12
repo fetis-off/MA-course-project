@@ -1,4 +1,4 @@
-package mate.academy.springweb.config;
+package org.project.springweb.config;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.NullValueCheckStrategy;

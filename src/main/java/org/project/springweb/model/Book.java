@@ -1,4 +1,4 @@
-package mate.academy.springweb.model;
+package org.project.springweb.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

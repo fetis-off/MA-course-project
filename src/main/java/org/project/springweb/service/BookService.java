@@ -1,7 +1,8 @@
-package mate.academy.springweb.service;
+package org.project.springweb.service;
 
-import mate.academy.springweb.dto.BookDto;
-import mate.academy.springweb.dto.CreateBookRequestDto;
+import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.CreateBookRequestDto;
+
 import java.util.List;
 
 public interface BookService {
