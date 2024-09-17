@@ -27,4 +27,9 @@ public class BookController {
     public BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
         return bookService.create(requestDto);
     }
+
+    @DeleteMapping("/books/{id}")
+    public void deleteBookById(@PathVariable Long id) {
+        bookService.delete(id);
+    }
 }

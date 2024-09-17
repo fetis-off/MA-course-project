@@ -11,4 +11,8 @@ public interface BookService {
     BookDto getBookById(Long id);
 
     BookDto create(CreateBookRequestDto requestDto);
+
+    BookDto delete(Long id);
+
+   /* BookDto update(BookDto requestDto);*/
 }
