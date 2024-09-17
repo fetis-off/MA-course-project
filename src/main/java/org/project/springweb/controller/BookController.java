@@ -28,8 +28,13 @@ public class BookController {
         return bookService.create(requestDto);
     }
 
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/{id}")
     public void deleteBookById(@PathVariable Long id) {
         bookService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+       return bookService.update(id, bookDto);
     }
 }
