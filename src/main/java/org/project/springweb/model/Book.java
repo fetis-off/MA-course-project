@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id=?")
+@Where(clause = "is_deleted=false")
 @Table(name = "books")
 public class Book {
     @Id
@@ -34,4 +36,6 @@ public class Book {
 
     private String coverImage;
 
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 }
