@@ -2,11 +2,16 @@ package org.project.springweb.service;
 
 import lombok.RequiredArgsConstructor;
 import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.BookSearchParametersDto;
 import org.project.springweb.dto.CreateBookRequestDto;
 import org.project.springweb.exception.EntityNotFoundException;
 import org.project.springweb.mapper.BookMapper;
 import org.project.springweb.model.Book;
 import org.project.springweb.repository.BookRepository;
+import org.project.springweb.repository.BookSpecificationBuilder;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -15,6 +20,7 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
     public List<BookDto> getAll() {
@@ -42,6 +48,14 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Cannot find book with id: " + id));
         bookRepository.delete(book);
+    }
+
+    @Override
+    public List<BookDto> search(BookSearchParametersDto params) {
+        Specification<BookDto> bookSpecification = bookSpecificationBuilder.build(params);
+        return bookRepository.findAll(bookSpecification)
+                .stream()
+                .toList();
     }
 
     @Override
