@@ -1,9 +1,11 @@
 package org.project.springweb.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.project.springweb.dto.BookDto;
 import org.project.springweb.dto.CreateBookRequestDto;
 import org.project.springweb.service.BookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -24,7 +26,8 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.create(requestDto);
     }
 
@@ -37,5 +40,4 @@ public class BookController {
     public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
         return bookService.update(id, bookDto);
     }
-
 }
