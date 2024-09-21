@@ -2,6 +2,7 @@ package org.project.springweb.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.BookSearchParametersDto;
 import org.project.springweb.dto.CreateBookRequestDto;
 import org.project.springweb.service.BookService;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,11 @@ public class BookController {
     @PutMapping("/{id}")
     public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
         return bookService.update(id, bookDto);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
     }
 
 }
