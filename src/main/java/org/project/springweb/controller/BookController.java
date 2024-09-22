@@ -2,8 +2,12 @@ package org.project.springweb.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.BookSearchParametersDto;
 import org.project.springweb.dto.CreateBookRequestDto;
 import org.project.springweb.service.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,6 +35,12 @@ public class BookController {
     @DeleteMapping("/{id}")
     public void deleteBookById(@PathVariable Long id) {
         bookService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters,
+                                     @PageableDefault(size = 10) Pageable pageable) {
+        return bookService.search(searchParameters, pageable);
     }
 
     @PutMapping("/{id}")
