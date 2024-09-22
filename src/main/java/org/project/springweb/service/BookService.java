@@ -1,7 +1,10 @@
 package org.project.springweb.service;
 
 import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.BookSearchParametersDto;
 import org.project.springweb.dto.CreateBookRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -15,4 +18,6 @@ public interface BookService {
     BookDto update(Long id, BookDto requestDto);
 
     void delete(Long id);
+
+    Page<BookDto> search(BookSearchParametersDto params, Pageable pageable);
 }

@@ -33,6 +33,12 @@ public class BookController {
         bookService.delete(id);
     }
 
+    @GetMapping("/search")
+    public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters,
+                                     @PageableDefault(size = 10) Pageable pageable) {
+        return bookService.search(searchParameters, pageable);
+    }
+
     @PutMapping("/{id}")
     public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
         return bookService.update(id, bookDto);
