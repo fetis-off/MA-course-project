@@ -6,6 +6,9 @@ import org.project.springweb.dto.BookDto;
 import org.project.springweb.dto.CreateBookRequestDto;
 import org.project.springweb.service.BookService;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -37,7 +40,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+    public BookDto updateBook(@PathVariable Long id, @RequestBody @Valid BookDto bookDto) {
         return bookService.update(id, bookDto);
     }
 }
