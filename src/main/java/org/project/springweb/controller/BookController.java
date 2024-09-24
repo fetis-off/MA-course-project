@@ -20,8 +20,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDto> getAll() {
-        return bookService.getAll();
+    public List<BookDto> getAll(@PageableDefault(size = 20) Pageable pageable) {
+        return bookService.getAll(pageable);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +42,7 @@ public class BookController {
 
     @GetMapping("/search")
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters,
-                                     @PageableDefault(size = 10) Pageable pageable) {
+                                     @PageableDefault(size = 20) Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }
 
