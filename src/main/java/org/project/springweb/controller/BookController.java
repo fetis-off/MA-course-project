@@ -2,10 +2,10 @@ package org.project.springweb.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.project.springweb.dto.BookDto;
-import org.project.springweb.dto.BookSearchParametersDto;
-import org.project.springweb.dto.CreateBookRequestDto;
-import org.project.springweb.service.BookService;
+import org.project.springweb.dto.book.BookDto;
+import org.project.springweb.dto.book.BookSearchParametersDto;
+import org.project.springweb.dto.book.CreateBookRequestDto;
+import org.project.springweb.service.book.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

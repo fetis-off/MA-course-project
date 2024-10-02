@@ -1,6 +1,6 @@
 package org.project.springweb.repository.book.spec;
 
-import org.project.springweb.dto.BookDto;
+import org.project.springweb.dto.book.BookDto;
 import org.project.springweb.repository.SpecificationProvider;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
