@@ -1,10 +1,10 @@
-package org.project.springweb.dto;
+package org.project.springweb.dto.book;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import org.project.springweb.validation.Author;
-import org.project.springweb.validation.Isbn;
+import org.project.springweb.validation.book.Author;
+import org.project.springweb.validation.book.Isbn;
 import java.math.BigDecimal;
 
 @Data

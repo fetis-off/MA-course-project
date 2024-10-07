@@ -1,8 +1,8 @@
 package org.project.springweb.repository.book;
 
 import lombok.RequiredArgsConstructor;
-import org.project.springweb.dto.BookDto;
-import org.project.springweb.dto.BookSearchParametersDto;
+import org.project.springweb.dto.book.BookDto;
+import org.project.springweb.dto.book.BookSearchParametersDto;
 import org.project.springweb.repository.SpecificationBuilder;
 import org.project.springweb.repository.SpecificationProviderManager;
 import org.springframework.data.jpa.domain.Specification;

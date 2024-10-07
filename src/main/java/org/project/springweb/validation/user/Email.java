@@ -1,4 +1,4 @@
-package org.project.springweb.validation;
+package org.project.springweb.validation.user;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,11 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = IsbnValidator.class)
+@Constraint(validatedBy = EmailValidator.class)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Isbn {
-    String message() default "Invalid format ISBN. Should be either 10 or 13 digits.";
+public @interface Email {
+    String message() default "Invalid format Email. Example: example@example.com";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
