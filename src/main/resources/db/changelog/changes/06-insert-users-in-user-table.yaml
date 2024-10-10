@@ -11,13 +11,13 @@ databaseChangeLog:
                   value: "admin@gmail.com"
               - column:
                   name: password
-                  value: "1234"
+                  value: "admin1234"
               - column:
                   name: first_name
-                  value: "Audi"
+                  value: "Adamov"
               - column:
                   name: last_name
-                  value: "Q7"
+                  value: "Adam"
               - column:
                   name: shipping_address
                   value: "Ukraine"
@@ -29,13 +29,13 @@ databaseChangeLog:
                   value: "user@gmail.com"
               - column:
                   name: password
-                  value: "user"
+                  value: "user1234"
               - column:
                   name: first_name
-                  value: "BMW"
+                  value: "Ivan"
               - column:
                   name: last_name
-                  value: "M5"
+                  value: "Ivanov"
               - column:
                   name: shipping_address
                   value: "Ukraine"
