@@ -1,12 +1,11 @@
 package org.project.springweb.service.book;
 
+import java.util.List;
 import org.project.springweb.dto.book.BookDto;
 import org.project.springweb.dto.book.BookSearchParametersDto;
 import org.project.springweb.dto.book.CreateBookRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface BookService {
     List<BookDto> getAll(Pageable pageable);
