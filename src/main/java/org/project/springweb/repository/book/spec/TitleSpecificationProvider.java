@@ -1,11 +1,10 @@
 package org.project.springweb.repository.book.spec;
 
+import java.util.Arrays;
 import org.project.springweb.dto.book.BookDto;
 import org.project.springweb.repository.SpecificationProvider;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
 
 @Component
 public class TitleSpecificationProvider implements SpecificationProvider<BookDto> {
@@ -18,6 +17,7 @@ public class TitleSpecificationProvider implements SpecificationProvider<BookDto
 
     @Override
     public Specification<BookDto> getSpecification(String[] params) {
-        return (root, query, criteriaBuilder) -> root.get(FIELD_NAME).in(Arrays.stream(params).toArray());
+        return (root, query, criteriaBuilder) -> root.get(FIELD_NAME)
+                .in(Arrays.stream(params).toArray());
     }
 }
