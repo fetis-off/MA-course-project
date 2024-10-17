@@ -1,5 +1,6 @@
 package org.project.springweb.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,18 +29,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
+    @Operation(summary = "Get all books")
     @PreAuthorize("hasRole('USER')")
     @GetMapping
     public List<BookDto> getAll(@PageableDefault(size = 20) Pageable pageable) {
         return bookService.getAll(pageable);
     }
 
+    @Operation(summary = "Get a book", description = "Get a particular book by id")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
+    @Operation(summary = "Create a new book", description = "Create a new book")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,12 +51,14 @@ public class BookController {
         return bookService.create(requestDto);
     }
 
+    @Operation(summary = "Delete a book", description = "Delete a particular book by id")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteBookById(@PathVariable Long id) {
         bookService.delete(id);
     }
 
+    @Operation(summary = "Search books", description = "Search books by parameters")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/search")
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters,
@@ -60,6 +66,7 @@ public class BookController {
         return bookService.search(searchParameters, pageable);
     }
 
+    @Operation(summary = "Update a book", description = "Update a particular book by id")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public BookDto updateBook(@PathVariable Long id,
