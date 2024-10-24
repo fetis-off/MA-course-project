@@ -10,8 +10,7 @@ public interface ShoppingCartService {
 
     ShoppingCartResponseDto getShoppingCartForUser(Long userId);
 
-    ShoppingCartResponseDto addCartItem(CreateCartItemRequestDto requestDto,
-                                        Long userId);
+    ShoppingCartResponseDto addCartItem(CreateCartItemRequestDto requestDto, Long userId);
 
     ShoppingCartResponseDto updateCartItem(
             Long cartId,

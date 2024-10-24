@@ -9,6 +9,7 @@ import org.project.springweb.dto.cartitem.UpdateCartItemRequestDto;
 import org.project.springweb.dto.shoppingcart.ShoppingCartResponseDto;
 import org.project.springweb.model.User;
 import org.project.springweb.service.shoppingcart.ShoppingCartService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Books store", description = "Endpoints for managing shopping carts")
@@ -30,6 +32,7 @@ public class ShoppingCartController {
     @Operation(summary = "Add new cart item",
             description = "Add a new cart item to current user's shopping cart")
     @PreAuthorize("hasRole('USER')")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ShoppingCartResponseDto addCartItem(
             @RequestBody @Valid CreateCartItemRequestDto requestDto,
@@ -59,6 +62,7 @@ public class ShoppingCartController {
     @Operation(summary = "Delete cart item",
             description = "Delete cart item by id from current user's shopping cart")
     @PreAuthorize("hasRole('USER')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/items/{id}")
     public void deleteCartItem(
             @PathVariable Long id,

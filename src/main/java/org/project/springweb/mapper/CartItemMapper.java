@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.project.springweb.config.MapperConfig;
 import org.project.springweb.dto.cartitem.CartItemResponseDto;
@@ -21,13 +20,12 @@ public interface CartItemMapper {
     @Mapping(source = "book.title", target = "bookTitle")
     CartItemResponseDto toDto(CartItem cartItem);
 
-    void updateCartItem(UpdateCartItemRequestDto requestDto,
-                        @MappingTarget CartItem cartItem);
-
     @Named(value = "toCartItemDtoSet")
     default Set<CartItemResponseDto> toCartItemDtoSet(Set<CartItem> cartItems) {
         return cartItems.stream()
                 .map(this::toDto)
                 .collect(Collectors.toSet());
     }
+
+    UpdateCartItemRequestDto toUpdateCartItemRequestDto(CreateCartItemRequestDto requestDto);
 }

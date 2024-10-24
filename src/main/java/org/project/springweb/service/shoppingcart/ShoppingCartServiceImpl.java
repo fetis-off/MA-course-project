@@ -53,8 +53,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem cartItem;
         if (existingCartItem.isPresent()) {
             cartItem = existingCartItem.get();
-            cartItem.setQuantity(cartItem.getQuantity() + requestDto.getQuantity());
-            cartItemRepository.save(cartItem);
+            UpdateCartItemRequestDto updateRequestDto = cartItemMapper
+                    .toUpdateCartItemRequestDto(requestDto);
+            updateCartItem(cartItem.getId(), updateRequestDto, userId);
         } else {
             cartItem = cartItemMapper.toEntity(requestDto);
             cartItem.setShoppingCart(shoppingCart);
@@ -71,9 +72,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                                                   Long userId) {
         CartItem cartItem = findCartItemById(cartId);
         ShoppingCart shoppingCart = checkIfCartItemBelongsToUser(userId, cartItem, cartId);
-        cartItemMapper.updateCartItem(requestDto, cartItem);
+        cartItem.setQuantity(requestDto.getQuantity());
         cartItemRepository.save(cartItem);
-        return shoppingCartMapper.toDto(updateCartItemInShoppingCart(shoppingCart, cartItem));
+        return shoppingCartMapper.toDto(shoppingCart);
     }
 
     @Override
@@ -107,14 +108,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             throw new DataProcessingException("Cart item with id = " + cartId
                     + " does not belong to this user.");
         }
-        return shoppingCart;
-    }
-
-    private ShoppingCart updateCartItemInShoppingCart(ShoppingCart shoppingCart,
-                                                      CartItem cartItem) {
-        shoppingCart.getCartItems().stream()
-                .filter(item -> item.getId().equals(cartItem.getId()))
-                .forEach(item -> item.setQuantity(cartItem.getQuantity()));
         return shoppingCart;
     }
 }
