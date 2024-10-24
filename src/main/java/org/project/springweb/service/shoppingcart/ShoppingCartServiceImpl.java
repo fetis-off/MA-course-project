@@ -71,7 +71,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                                                   UpdateCartItemRequestDto requestDto,
                                                   Long userId) {
         CartItem cartItem = findCartItemById(cartId);
-        ShoppingCart shoppingCart = checkIfCartItemBelongsToUser(userId, cartItem, cartId);
+        ShoppingCart shoppingCart = findShoppingCartByUserId(userId);
         cartItem.setQuantity(requestDto.getQuantity());
         cartItemRepository.save(cartItem);
         return shoppingCartMapper.toDto(shoppingCart);
@@ -79,8 +79,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void deleteCartItem(Long cartId, Long userId) {
-        CartItem cartItem = findCartItemById(cartId);
-        checkIfCartItemBelongsToUser(userId, cartItem, cartId);
+        ShoppingCart shoppingCart = findShoppingCartByUserId(userId);
+        CartItem cartItem = shoppingCart.getCartItems().stream()
+                .filter(item -> item.getId().equals(cartId))
+                .findFirst().orElseThrow(
+                        () -> new DataProcessingException("Cannot find cart item with id "
+                                + cartId));
         cartItemRepository.delete(cartItem);
     }
 
@@ -96,18 +100,5 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 () -> new EntityNotFoundException("Can't find cart item by id "
                         + cartId)
         );
-    }
-
-    private ShoppingCart checkIfCartItemBelongsToUser(Long userId,
-                                                      CartItem cartItem,
-                                                      Long cartId) {
-        ShoppingCart shoppingCart = findShoppingCartByUserId(userId);
-        if (shoppingCart.getCartItems().stream()
-                .noneMatch(item -> item.getId()
-                        .equals(cartItem.getId()))) {
-            throw new DataProcessingException("Cart item with id = " + cartId
-                    + " does not belong to this user.");
-        }
-        return shoppingCart;
     }
 }
