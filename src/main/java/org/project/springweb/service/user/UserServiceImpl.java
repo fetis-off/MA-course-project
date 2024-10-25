@@ -1,5 +1,6 @@
 package org.project.springweb.service.user;
 
+import jakarta.transaction.Transactional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.project.springweb.dto.user.UserRegistrationRequestDto;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final ShoppingCartService shoppingCartService;
 
+    @Transactional
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto)
             throws RegistrationException {
@@ -31,7 +33,6 @@ public class UserServiceImpl implements UserService {
                     requestDto.getEmail())
             );
         }
-
         User user = userMapper.toUser(requestDto);
         user.setRoles(Set.of(roleRepository.findByRole(Role.RoleName.ROLE_USER)));
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
