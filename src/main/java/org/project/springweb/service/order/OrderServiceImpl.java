@@ -21,8 +21,6 @@ import org.project.springweb.model.Status;
 import org.project.springweb.repository.order.OrderRepository;
 import org.project.springweb.repository.orderitem.OrderItemRepository;
 import org.project.springweb.repository.shoppingcart.ShoppingCartRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,9 +46,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderResponseDto> getAllOrdersByUserId(Pageable pageable, Long userId) {
-        Page<Order> orders = orderRepository.findAllByUserId(userId, pageable);
-        return orders.map(orderMapper::toDto);
+    public List<OrderResponseDto> getAllOrdersByUserId(Long userId) {
+        List<Order> orders = orderRepository.findAllByUserId(userId);
+        return orders.stream()
+                .map(orderMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -75,10 +75,12 @@ public class OrderServiceImpl implements OrderService {
         Order order = getOrderByIdAndUserId(orderId, userId);
         OrderItem orderItem = orderItemRepository.findById(orderItemId)
                 .orElseThrow(
-                () -> new EntityNotFoundException("Order item with id "
-                        + orderItemId + " not found")
-        );
-        if (!order.getItems().contains(orderItem)) {
+                        () -> new EntityNotFoundException("Order item with id "
+                                + orderItemId + " not found")
+                );
+        boolean itemExists = order.getItems().stream()
+                .anyMatch(item -> item.getId().equals(orderItemId));
+        if (!itemExists) {
             throw new EntityNotFoundException("Order item with id "
                     + orderItemId
                     + " not found in order with id "

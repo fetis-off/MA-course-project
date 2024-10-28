@@ -38,7 +38,6 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
-
         - addForeignKeyConstraint:
             baseTableName: orders
             baseColumnNames: user_id
