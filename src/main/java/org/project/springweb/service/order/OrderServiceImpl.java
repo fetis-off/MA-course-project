@@ -1,7 +1,9 @@
 package org.project.springweb.service.order;
 
+import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,6 +12,7 @@ import org.project.springweb.dto.order.CreateOrderRequestDto;
 import org.project.springweb.dto.order.OrderResponseDto;
 import org.project.springweb.dto.order.UpdateOrderStatusDto;
 import org.project.springweb.dto.orderitem.OrderItemResponseDto;
+import org.project.springweb.exception.DataProcessingException;
 import org.project.springweb.exception.EntityNotFoundException;
 import org.project.springweb.exception.OrderProcessingException;
 import org.project.springweb.mapper.OrderItemMapper;
@@ -32,6 +35,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final OrderItemRepository orderItemRepository;
 
+    @Transactional
     @Override
     public OrderResponseDto createOrder(CreateOrderRequestDto requestDto, Long userId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId).orElseThrow(
@@ -42,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
         }
         Order order = fillOrder(shoppingCart, requestDto);
         orderRepository.save(order);
+        shoppingCart.getCartItems().clear();
+        shoppingCartRepository.save(shoppingCart);
         return orderMapper.toDto(order);
     }
 
@@ -50,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderRepository.findAllByUserId(userId);
         return orders.stream()
                 .map(orderMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -58,6 +64,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException("Cannot find order with id " + orderId)
         );
+
+        if (!isValidStatus(requestDto.getStatus())) {
+            throw new DataProcessingException("Invalid status "
+                    + requestDto.getStatus());
+        }
         order.setStatus(requestDto.getStatus());
         return orderMapper.toDto(orderRepository.save(order));
     }
@@ -67,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = getOrderByIdAndUserId(orderId, userId);
         return order.getItems().stream()
                 .map(orderItemMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -117,5 +128,10 @@ public class OrderServiceImpl implements OrderService {
                         () -> new EntityNotFoundException("Order with order id " + orderId
                                 + " not found or doesn't belong to user with id " + userId)
                 );
+    }
+
+    private boolean isValidStatus(Status status) {
+        return Arrays.stream(Status.values())
+                .anyMatch(s -> s.name().equalsIgnoreCase(status.name()));
     }
 }
