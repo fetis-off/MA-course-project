@@ -83,20 +83,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderItemResponseDto getSpecificOrderItem(Long orderId, Long userId, Long orderItemId) {
-        Order order = getOrderByIdAndUserId(orderId, userId);
-        OrderItem orderItem = orderItemRepository.findById(orderItemId)
+        OrderItem orderItem = orderItemRepository
+                .findByIdAndOrderIdAndOrderUserId(orderItemId, orderId, userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Order item with id "
-                                + orderItemId + " not found")
+                                + orderItemId
+                                + " not found")
                 );
-        boolean itemExists = order.getItems().stream()
-                .anyMatch(item -> item.getId().equals(orderItemId));
-        if (!itemExists) {
-            throw new EntityNotFoundException("Order item with id "
-                    + orderItemId
-                    + " not found in order with id "
-                    + order.getId());
-        }
         return orderItemMapper.toDto(orderItem);
     }
 
