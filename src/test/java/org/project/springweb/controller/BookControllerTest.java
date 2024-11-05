@@ -29,8 +29,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @Sql(scripts = {"classpath:database/categories/add-three-categories-to-categories.sql",
-        "classpath:database/books/add-three-books.sql"},
-        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+        "classpath:database/books/add-three-books.sql"})
 @Sql(scripts = {"classpath:database/categories/delete-categories-from-category.sql",
         "classpath:database/books/delete-books.sql"},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)

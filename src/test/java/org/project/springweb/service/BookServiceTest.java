@@ -1,12 +1,12 @@
 package org.project.springweb.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +48,7 @@ public class BookServiceTest {
         when(bookMapper.toDto(book)).thenReturn(expected);
         BookDto actual = bookService.getBookById(bookId);
         //Then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).findById(bookId);
         verify(bookMapper, Mockito.times(1)).toDto(book);
     }
@@ -70,7 +70,7 @@ public class BookServiceTest {
         when(bookRepository.findAll(pageable)).thenReturn(bookPage);
         List<BookDto> actual = bookService.findAll(pageable);
         //Then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).findAll(pageable);
         verify(bookMapper, Mockito.times(1)).toDto(firstBook);
         verify(bookMapper, Mockito.times(1)).toDto(secondBook);
@@ -89,7 +89,7 @@ public class BookServiceTest {
         when(bookMapper.toDto(book)).thenReturn(expected);
         BookDto actual = bookService.create(requestDto);
         //Then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).save(book);
         verify(bookMapper, Mockito.times(1)).toModel(requestDto);
         verify(bookMapper, Mockito.times(1)).toDto(book);
@@ -110,7 +110,7 @@ public class BookServiceTest {
         when(bookMapper.toDto(book)).thenReturn(expected);
         BookDto actual = bookService.update(bookId, requestDto);
         //Then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).findById(bookId);
         verify(bookMapper, Mockito.times(1)).updateBook(requestDto, book);
         verify(bookMapper, Mockito.times(1)).toDto(book);
@@ -136,7 +136,7 @@ public class BookServiceTest {
         List<BookDtoWithoutCategoryIds> actual = bookService.findAllByCategoryId(categoryId,
                 pageable);
         //Then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).findAllByCategoryId(categoryId, pageable);
         verify(bookMapper, Mockito.times(1)).toDtoWithoutCategoryIds(firstBook);
         verify(bookMapper, Mockito.times(1)).toDtoWithoutCategoryIds(secondBook);
