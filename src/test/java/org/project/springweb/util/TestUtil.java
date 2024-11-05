@@ -34,15 +34,17 @@ public final class TestUtil {
     }
 
     public static CategoryDto createCategoryResponseDto() {
+        CreateCategoryRequestDto requestDto = createCategoryRequestDto();
         return new CategoryDto()
-                .setName(createCategoryRequestDto().getName())
-                .setDescription(createCategoryRequestDto().getDescription());
+                .setName(requestDto.getName())
+                .setDescription(requestDto.getDescription());
     }
 
     public static CategoryDto updateCategoryResponseDto() {
+        CreateCategoryRequestDto requestDto = updateCategoryRequestDto();
         return new CategoryDto()
-                .setName(updateCategoryRequestDto().getName())
-                .setDescription(updateCategoryRequestDto().getDescription());
+                .setName(requestDto.getName())
+                .setDescription(requestDto.getDescription());
     }
 
     public static CreateCategoryRequestDto updateCategoryRequestDto() {
