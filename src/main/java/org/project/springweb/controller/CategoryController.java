@@ -10,6 +10,7 @@ import org.project.springweb.dto.category.CategoryDto;
 import org.project.springweb.dto.category.CreateCategoryRequestDto;
 import org.project.springweb.service.category.CategoryService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Books store", description = "Endpoints for managing categories")
@@ -37,6 +39,7 @@ public class CategoryController {
     @Operation(summary = "Create a new category", description = "Create a new category")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createCategory(@RequestBody @Valid CreateCategoryRequestDto requestDto) {
         return categoryService.save(requestDto);
     }
@@ -52,6 +55,7 @@ public class CategoryController {
     @Operation(summary = "Delete a category", description = "Delete a particular category by id")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
     }
