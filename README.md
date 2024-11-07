@@ -41,7 +41,7 @@ This API supports standard CRUD operations, user authentication, and order handl
 
 1. Clone repository
     ```bash
-       git https://github.com/fetis-off/course-project.git
+       git clone https://github.com/fetis-off/course-project.git
    ```
 
 2. Create .env file for environment by filling the .env.template
